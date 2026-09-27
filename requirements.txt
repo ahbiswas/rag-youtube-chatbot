@@ -1,0 +1,12 @@
+streamlit==1.64.0
+langchain-core==1.6.5
+langchain-community==0.4.2
+langchain-text-splitters==1.1.2
+langchain-huggingface==1.2.2
+langchain-google-genai==4.4.0
+sentence-transformers==6.1.0
+faiss-cpu==1.15.1
+youtube-transcript-api==1.2.4
+yt-dlp==2026.8.19
+requests==2.34.2
+python-dotenv==1.2.3
