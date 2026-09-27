@@ -1,5 +1,7 @@
 [server]
 headless = true
+# Don't scan imported libraries for changes (transformers logs torchvision errors)
+fileWatcherType = "none"
 
 [browser]
 gatherUsageStats = false
