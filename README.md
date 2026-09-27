@@ -84,7 +84,7 @@ Restart `streamlit` after editing `.env`.
 ## Deploy on Streamlit Community Cloud
 
 1. Go to https://share.streamlit.io, click **Create app** and pick this repository, branch `main` and main file `app.py`.
-2. Open **Advanced settings**, set **Python version** to **3.11** (the CPU-only PyTorch wheel in `requirements.txt` is built for 3.11), and paste your key into **Secrets**:
+2. Open **Advanced settings** (any Python version from 3.11 to 3.14 works) and paste your key into **Secrets**:
 
    ```toml
    GOOGLE_API_KEY = "your-key-here"
