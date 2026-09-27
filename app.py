@@ -1,22 +1,8 @@
-import os
-
 import streamlit as st
 from dotenv import load_dotenv
 
 # Load .env before importing chain.py so LLM settings are picked up
 load_dotenv()
-
-# On Streamlit Community Cloud, settings come from the app's Secrets
-# (top-level keys or keys inside a [section])
-SETTINGS = ("GOOGLE_API_KEY", "LLM_MODEL", "GEMINI_FALLBACK_MODELS")
-try:
-    for key, value in st.secrets.to_dict().items():
-        items = value.items() if isinstance(value, dict) else [(key, value)]
-        for k, v in items:
-            if k in SETTINGS and not os.getenv(k):
-                os.environ[k] = str(v).strip()
-except Exception:
-    pass  # no secrets.toml (e.g. running locally with .env)
 
 from loader import extract_video_id, fetch_transcript, transcript_to_text
 from index import build_faiss_index

@@ -49,8 +49,7 @@ FINAL_SUMMARY_PROMPT = ChatPromptTemplate.from_messages([
 def check_llm():
     """Return None if the Gemini API key is set, else a human-readable problem."""
     if not os.getenv("GOOGLE_API_KEY"):
-        return ("`GOOGLE_API_KEY` is not set. Add it to your `.env` file (see `.env.example`), "
-                "or to the app's Secrets when deployed on Streamlit Community Cloud.")
+        return "`GOOGLE_API_KEY` is not set. Add it to your `.env` file (see `.env.example`)."
     return None
 
 
