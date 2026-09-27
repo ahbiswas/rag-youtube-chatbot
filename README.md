@@ -81,6 +81,18 @@ Open http://localhost:8501, paste a YouTube URL, click **Build Knowledge Base**,
 
 Restart `streamlit` after editing `.env`.
 
+## Deploy on Streamlit Community Cloud
+
+1. Go to https://share.streamlit.io, click **Create app** and pick this repository, branch `main` and main file `app.py`.
+2. Open **Advanced settings**, set **Python version** to **3.11** (the CPU-only PyTorch wheel in `requirements.txt` is built for 3.11), and paste your key into **Secrets**:
+
+   ```toml
+   GOOGLE_API_KEY = "your-key-here"
+   ```
+
+   The optional `LLM_MODEL` and `GEMINI_FALLBACK_MODELS` settings can go in Secrets the same way.
+3. Click **Deploy**. The first build takes a few minutes, and the embedding model downloads on the first question.
+
 ## Notes & limitations
 
 - Only works for videos that have captions (manual or auto-generated).

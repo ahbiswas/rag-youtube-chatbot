@@ -1,3 +1,7 @@
+# CPU-only PyTorch on Linux / Streamlit Cloud (the default Linux wheel bundles several GB of
+# CUDA libraries). This wheel is for Python 3.11.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl ; sys_platform == "linux"
+torch==2.14.0 ; sys_platform != "linux"
 streamlit==1.64.0
 langchain-core==1.6.5
 langchain-community==0.4.2
