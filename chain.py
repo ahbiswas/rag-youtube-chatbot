@@ -9,17 +9,19 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 #   GOOGLE_API_KEY          Gemini API key (required)
 #   LLM_MODEL               main Gemini model
 #   GEMINI_FALLBACK_MODELS  comma-separated models tried in order when the main
-#                           model is overloaded (503), retired (404) or times out
+#                           model is overloaded (503), out of quota (429),
+#                           retired (404) or times out
 # -----------------------------------------------------------------------------
-LLM_MODEL = os.getenv("LLM_MODEL") or "gemini-3.8-flash"
+LLM_MODEL = os.getenv("LLM_MODEL") or "gemini-3.5-flash-lite"
 GEMINI_FALLBACK_MODELS = [
     m.strip()
-    for m in os.getenv("GEMINI_FALLBACK_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite").split(",")
+    for m in os.getenv("GEMINI_FALLBACK_MODELS", "gemini-3.1-flash-lite,gemini-3.6-flash,gemini-3.5-flash,gemini-3.7-flash,gemini-3.8-flash").split(",")
     if m.strip()
 ]
 
-# Max characters of transcript sent to the LLM in one call when summarizing
-SUMMARY_BATCH_CHARS = 12000
+# Max characters of transcript sent to the LLM in one call when summarizing.
+# Large so most videos (under ~1.5 h) need a single call, saving free-tier quota
+SUMMARY_BATCH_CHARS = 100000
 
 # Number of previous question/answer pairs sent with each question
 HISTORY_TURNS = 3
@@ -65,7 +67,9 @@ def _gemini(model):
 def get_llm():
     """Main Gemini model, falling back to GEMINI_FALLBACK_MODELS when it fails."""
     fallbacks = [_gemini(m) for m in GEMINI_FALLBACK_MODELS if m != LLM_MODEL]
-    return _gemini(LLM_MODEL).with_fallbacks(fallbacks) if fallbacks else _gemini(LLM_MODEL)
+    llm = _gemini(LLM_MODEL).with_fallbacks(fallbacks) if fallbacks else _gemini(LLM_MODEL)
+    # When every model is busy at once, wait a few seconds and try the whole chain again
+    return llm.with_retry(stop_after_attempt=3, wait_exponential_jitter=True)
 
 
 def make_rag_chain(retriever):

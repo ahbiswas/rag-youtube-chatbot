@@ -76,8 +76,8 @@ Open http://localhost:8501, paste a YouTube URL, click **Build Knowledge Base**,
 | Setting | Default | Meaning |
 |---|---|---|
 | `GOOGLE_API_KEY` | — | Your Gemini API key (required) |
-| `LLM_MODEL` | `gemini-3.8-flash` | Main Gemini model (use the API model ID, not the display name) |
-| `GEMINI_FALLBACK_MODELS` | `gemini-3.5-flash-lite,gemini-3.1-flash-lite` | Models tried in order when the main one is busy or unavailable |
+| `LLM_MODEL` | `gemini-3.5-flash-lite` | Main Gemini model (use the API model ID, not the display name). Lite models get 500 free requests/day, Flash only 20 |
+| `GEMINI_FALLBACK_MODELS` | `gemini-3.1-flash-lite,gemini-3.6-flash,gemini-3.5-flash,gemini-3.7-flash,gemini-3.8-flash` | Models tried in order when the main one is busy, out of quota or unavailable |
 
 Restart `streamlit` after editing `.env`.
 

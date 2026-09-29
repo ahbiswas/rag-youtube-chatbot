@@ -137,7 +137,14 @@ def run_turn(user_text, generate, spinner_text):
             try:
                 answer, sources = generate(history)
             except Exception as e:
-                answer, error = f"LLM error: {e}", True
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    answer = ("Your free Gemini quota is used up for now. Wait a minute (per-minute limit) "
+                              "or until tomorrow (daily limit), or enable billing in Google AI Studio.")
+                elif "503" in str(e) or "UNAVAILABLE" in str(e):
+                    answer = "All Gemini models are busy right now (Google's servers, not the app). Please try again in a minute."
+                else:
+                    answer = f"LLM error: {e}"
+                error = True
         st.markdown(md(answer))
         if sources:
             show_sources(sources)
