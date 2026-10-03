@@ -4,7 +4,7 @@ Ask questions about any YouTube video, or get a summary of it, using Retrieval-A
 
 **Built with:** LangChain · FAISS · HuggingFace embeddings · Google Gemini · Streamlit
 
-Originally developed by Sohan Ghosh (MSc Data Science & AI). This version updates the project to current library versions, uses FAISS as the vector store, fixes the transcript loader, and adds chat memory, whole-video summaries and automatic Gemini model fallback. See `rag_chatbot.pdf` for the full project report.
+This version updates the project to current library versions, uses FAISS as the vector store, fixes the transcript loader, and adds chat memory, whole-video summaries and automatic Gemini model fallback. See `rag_chatbot.pdf` for the full project report.
 
 ## Demo
 
